@@ -1,0 +1,17 @@
+.product-list {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+  }
+  
+
+  .product-list-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 30px; 
+    justify-items: center;
+    box-sizing: border-box;
+  }
+  
+  
