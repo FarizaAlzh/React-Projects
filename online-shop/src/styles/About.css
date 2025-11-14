@@ -1,0 +1,53 @@
+.about-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .about-header {
+    font-size: 2rem;
+    color: #5a9a6e;
+    margin-bottom: 20px;
+  }
+  
+  .about-main {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .about-photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+  
+  .about-text {
+    text-align: center;
+  }
+  
+  .about-text h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .about-text p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    color: #555;
+  }
+  
+  ul {
+    list-style-type: none;
+  }
+  
+  ul li {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
