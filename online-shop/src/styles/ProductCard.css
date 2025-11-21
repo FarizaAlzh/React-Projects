@@ -1,51 +1,68 @@
 .product-card {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-}
-
-.product-image {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 15px;
-}
-
-.product-name {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.product-description {
-  font-size: 1rem;
-  color: #777;
-  margin-bottom: 15px;
-}
-
-.product-price {
-  font-weight: bold;
-  color: #5a9a6e;
-  margin-bottom: 10px;
-}
-
-.view-details {
-  text-decoration: none;
-  color: #5a9a6e;
-  font-weight: bold;
-  font-size: 1rem;
-  transition: color 0.3s ease;
-}
-
-.view-details:hover {
-  color: #333;
-}
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  }
+  
+  .product-image {
+    width: 100%;
+    max-width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+  
+  .product-name {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    margin: 10px 0;
+  }
+  
+  .product-description {
+    font-size: 1rem;
+    color: #555;
+    margin: 10px 0;
+  }
+  
+  .product-price {
+    font-size: 1.1rem;
+    color: #2980b9;
+    font-weight: 600;
+    margin: 10px 0;
+  }
+  
+  .view-details {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #2980b9;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .view-details:hover {
+    background-color: #3498db;
+  }
+  
+  .view-details:focus {
+    outline: none;
+  }
+  

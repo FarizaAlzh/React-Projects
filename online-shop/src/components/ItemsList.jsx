@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { fetchProducts } from '../services/ProductService';
+import { getItems } from '../services/ProductService';  
 import ProductCard from './ProductCard';
 import Spinner from './Spinner';
 import ErrorBox from './ErrorBox';
@@ -26,7 +26,7 @@ const ItemsList = () => {
     const loadProducts = async () => {
       try {
         setLoading(true);
-        const fetchedProducts = await fetchProducts(debouncedQuery);
+        const fetchedProducts = await getItems(debouncedQuery); 
         setProducts(fetchedProducts);
       } catch (err) {
         setError(err.message);
@@ -68,7 +68,7 @@ const ItemsList = () => {
               price={product.price}
               description={product.description}
               image={product.images}
-              id={product.id}
+              id={product.id} 
             />
           ))
         )}

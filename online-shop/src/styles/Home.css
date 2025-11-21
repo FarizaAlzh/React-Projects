@@ -1,128 +1,58 @@
-/* General Styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
-}
-
-body {
-  background-color: #f4f4f4;
-  color: #333;
-  font-size: 16px;
-  line-height: 1.6;
-}
-
-/* Home Component Styles */
+/* Home.css */
 .home-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 20px;
-}
-
-.welcome-section {
-  text-align: center;
-  margin-bottom: 50px;
-}
-
-.welcome-section h1 {
-  font-size: 3rem;
-  color: #5a9a6e;
-  margin-bottom: 20px;
-}
-
-.welcome-section p {
-  font-size: 1.2rem;
-  color: #666;
-  margin-bottom: 40px;
-}
-
-.content-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  margin-bottom: 50px;
-}
-
-.content-section h2 {
-  font-size: 2.5rem;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.content-section p {
-  font-size: 1.1rem;
-  color: #555;
-  margin-bottom: 20px;
-}
-
-.home-image {
-  width: 60%;
-  max-width: 500px;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-footer {
-  text-align: center;
-  padding: 20px;
-  background-color: #333;
-  color: #fff;
-  font-size: 1rem;
-  margin-top: 50px;
-}
-
-footer p {
-  margin: 0;
-}
-
-/* Navbar Styles */
-.navbar {
-  background-color: #333;
-  padding: 15px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-logo .navbar-brand {
-  color: #fff;
-  font-size: 1.8rem;
-  text-decoration: none;
-  padding-left: 20px;
-}
-
-.navbar-links {
-  display: flex;
-  gap: 20px;
-}
-
-.navbar-links a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 1rem;
-}
-
-.navbar-links a:hover {
-  text-decoration: underline;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .content-section {
-    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #6e7f84, #ccd6d6); /* Стильный градиент */
+    color: #333;
+    text-align: center;
+    padding: 30px;
+    box-sizing: border-box;
   }
-
+  
+  .home-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  .home-description {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.2rem;
+    color: #555;
+    line-height: 1.6;
+    max-width: 80%;
+    margin: 0 auto 20px;
+  }
+  
   .home-image {
-    width: 80%;
+    width: 70%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
   }
+  
+  .home-start {
+    font-family: 'Arial', sans-serif;
+    font-size: 1.2rem;
+    color: #2c3338;
+    font-weight: 600;
+    margin-top: 30px;
+    letter-spacing: 1px;
+  }
+  
+  .home-image:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
+  }
+  
 
-  .navbar-links {
-    gap: 15px;
-  }
-}
+  

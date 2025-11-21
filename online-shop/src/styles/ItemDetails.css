@@ -1,48 +1,56 @@
-/* Стили для страницы с деталями товара */
-.product-image {
-  max-width: 80%;
-  height: auto;
-  margin-top: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Легкая тень */
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #007BFF;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #0056b3; /* Темный синий при наведении */
-}
-
-h1 {
-  font-size: 2rem;
-  font-weight: 600;
-  color: #333;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-p {
-  font-size: 1rem;
-  color: #555;
-  line-height: 1.6;
-  text-align: center;
-  margin: 10px 0;
-}
-
-strong {
-  font-weight: bold;
-  color: #333;
-}
+/* ItemDetails.css */
+.product-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px;
+  }
+  
+  .product-image {
+    width: 70%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 30px;
+  }
+  
+  .product-info {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .product-info h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .product-info p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .product-info strong {
+    font-weight: bold;
+    color: #2c3e50;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #3498db;
+  }
+  
