@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { getItems } from '../services/ProductService';  
+import { useDispatch, useSelector } from 'react-redux';  
+import { fetchItems } from '../features/items/itemsSlice';  
 import ProductCard from './ProductCard';
 import Spinner from './Spinner';
 import ErrorBox from './ErrorBox';
 import '../styles/ItemsList.css';
 
 const ItemsList = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch(); 
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('q') || '';
-  const [debouncedQuery, setDebouncedQuery] = useState(query);
+  const [debouncedQuery, setDebouncedQuery] = React.useState(query);
+
+
+  const { list: products, loadingList, errorList } = useSelector((state) => state.items);
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -22,28 +25,19 @@ const ItemsList = () => {
     return () => clearTimeout(timer);
   }, [query]);
 
-  useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        setLoading(true);
-        const fetchedProducts = await getItems(debouncedQuery); 
-        setProducts(fetchedProducts);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadProducts();
-  }, [debouncedQuery]);
 
-  if (loading) return <Spinner />;
-  if (error) return <ErrorBox message={error} />;
+  useEffect(() => {
+    dispatch(fetchItems(debouncedQuery));  
+  }, [debouncedQuery, dispatch]);
+
 
   const handleInputChange = (e) => {
     const newQuery = e.target.value;
     setSearchParams({ q: newQuery });
   };
+
+  if (loadingList) return <Spinner />; 
+  if (errorList) return <ErrorBox message={errorList} />;  
 
   return (
     <div>
@@ -59,7 +53,7 @@ const ItemsList = () => {
       </div>
       <div className="product-list">
         {products.length === 0 ? (
-          <p>No products found</p>
+          <p>No products found</p>  
         ) : (
           products.map((product) => (
             <ProductCard
@@ -68,7 +62,7 @@ const ItemsList = () => {
               price={product.price}
               description={product.description}
               image={product.images}
-              id={product.id} 
+              id={product.id}
             />
           ))
         )}

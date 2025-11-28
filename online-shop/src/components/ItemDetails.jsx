@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getItemById } from '../services/ProductService';  
+import { useDispatch, useSelector } from 'react-redux';  
+import { fetchItemById } from '../features/items/itemsSlice';  
 import Spinner from './Spinner';
 import ErrorBox from './ErrorBox';
 import '../styles/ItemDetails.css';
@@ -8,30 +9,21 @@ import '../styles/ItemDetails.css';
 const ItemDetails = () => {
   const { id } = useParams();  
   const navigate = useNavigate();
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch(); 
+
+  
+  const { selectedItem, loadingItem, errorItem } = useSelector((state) => state.items);
 
   useEffect(() => {
-    const loadProduct = async () => {
-      try {
-        setLoading(true);
-        const fetchedProduct = await getItemById(id);  
-        setProduct(fetchedProduct);
-      } catch (err) {
-        setError(err.message || 'Ошибка при загрузке товара');
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadProduct();
-  }, [id]);
+    
+    dispatch(fetchItemById(id));
+  }, [dispatch, id]);
 
-  if (loading) return <Spinner />;
-  if (error) return <ErrorBox message={error} />;
-  if (!product) return <ErrorBox message="Product not found" />;
+  if (loadingItem) return <Spinner />;
+  if (errorItem) return <ErrorBox message={errorItem} />;
+  if (!selectedItem) return <ErrorBox message="Product not found" />;
 
-  const { title, images, description, category, price, rating, brand } = product;
+  const { title, images, description, category, price, rating, brand } = selectedItem;
   const imageUrl = images[0];  
 
   return (

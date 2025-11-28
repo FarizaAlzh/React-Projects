@@ -20,14 +20,15 @@ const Login = () => {
       await signInWithEmailAndPassword(auth, email, password);
       navigate('/profile'); 
     } catch (err) {
-      setError('Неверные данные для входа');
+      setError('Неверные данные для вход');
+      setPassword('');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="login-container">
+    <div className="login-container"> 
       <div className="login-form">
         <h1>Вход в систему</h1>
         {error && <p className="error-message">{error}</p>}
