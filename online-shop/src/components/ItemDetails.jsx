@@ -8,23 +8,20 @@ import '../styles/ItemDetails.css';
 
 const ItemDetails = () => {
   const { id } = useParams();  
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
   const dispatch = useDispatch(); 
-
-  
   const { selectedItem, loadingItem, errorItem } = useSelector((state) => state.items);
 
   useEffect(() => {
-    
-    dispatch(fetchItemById(id));
-  }, [dispatch, id]);
+    dispatch(fetchItemById(id));  
+  }, [dispatch, id]); 
 
   if (loadingItem) return <Spinner />;
   if (errorItem) return <ErrorBox message={errorItem} />;
   if (!selectedItem) return <ErrorBox message="Product not found" />;
-
+  
   const { title, images, description, category, price, rating, brand } = selectedItem;
-  const imageUrl = images[0];  
+  const imageUrl = images[0]; 
 
   return (
     <div className="product-details">

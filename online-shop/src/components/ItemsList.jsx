@@ -12,41 +12,34 @@ const ItemsList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('q') || '';
   const [debouncedQuery, setDebouncedQuery] = React.useState(query);
-
-
   const { list: products, loadingList, errorList } = useSelector((state) => state.items);
-
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setDebouncedQuery(query);
+      setDebouncedQuery(query); 
     }, 300);
-
-    return () => clearTimeout(timer);
+    return () => clearTimeout(timer);  
   }, [query]);
-
 
   useEffect(() => {
     dispatch(fetchItems(debouncedQuery));  
   }, [debouncedQuery, dispatch]);
 
-
   const handleInputChange = (e) => {
     const newQuery = e.target.value;
-    setSearchParams({ q: newQuery });
+    setSearchParams({ q: newQuery });  
   };
 
-  if (loadingList) return <Spinner />; 
+  if (loadingList) return <Spinner />;
   if (errorList) return <ErrorBox message={errorList} />;  
-
   return (
     <div>
       <h1>Products</h1>
       <div className="search-container">
         <input
           type="text"
-          value={query}
-          onChange={handleInputChange}
+          value={query}  
+          onChange={handleInputChange}  
           placeholder="Search for products"
           className="search-input"
         />

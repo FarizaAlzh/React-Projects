@@ -1,7 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AuthProvider } from './components/AuthContext.jsx';
-import { Provider } from 'react-redux';  
-import { store } from './store';  
 import RootLayout from "./components/RootLayout";
 import Home from './components/Home';
 import About from './components/About';
@@ -13,8 +10,6 @@ import Profile from './components/Profile';
 
 const App = () => {
   return (
-    <Provider store={store}>  
-      <AuthProvider>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<RootLayout />}>
@@ -28,8 +23,6 @@ const App = () => {
             </Route>
           </Routes>
         </BrowserRouter>
-      </AuthProvider>
-    </Provider>
   );
 };
 

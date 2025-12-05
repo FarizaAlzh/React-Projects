@@ -1,15 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { getAllItems , getItemById } from '../../services/ProductService';
 
 
 export const fetchItems = createAsyncThunk(
   'items/fetchItems',
   async (query) => {
-    const response = await fetch(`https://dummyjson.com/products/search?q=${query}`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch items');
-    }
-    const data = await response.json();
-    return data.products; 
+    const data = await getAllItems(query);
+    return data;
   }
 );
 
@@ -17,11 +14,7 @@ export const fetchItems = createAsyncThunk(
 export const fetchItemById = createAsyncThunk(
   'items/fetchItemById',
   async (id) => {
-    const response = await fetch(`https://dummyjson.com/products/${id}`);
-    if (!response.ok) {
-      throw new Error('Failed getting item id');
-    }
-    const data = await response.json();
+    const data = await getItemById(id);
     return data;
   }
 );
@@ -44,29 +37,30 @@ const itemsSlice = createSlice({
       state.query = action.payload;
     },
   },
-  extraReducers: (builder) => {
+    extraReducers: (builder) => {
 
-    builder
-      .addCase(fetchItems.pending, (state) => {
-        state.loadingList = true;
-      })
-      .addCase(fetchItems.fulfilled, (state, action) => {
-        state.loadingList = false;
-        state.list = action.payload; 
-      })
-      .addCase(fetchItems.rejected, (state, action) => {
-        state.loadingList = false;
-        state.errorList = action.error.message; 
-      });
+      builder
+        .addCase(fetchItems.pending, (state) => {
+          state.loadingList = true;
+        })
+        .addCase(fetchItems.fulfilled, (state, action) => {
+          state.loadingList = false;
+          state.list = action.payload
+                        
+        })
+        .addCase(fetchItems.rejected, (state, action) => {
+          state.loadingList = false;
+          state.errorList = action.error.message; 
+        });
 
-    builder
-      .addCase(fetchItemById.pending, (state) => {
-        state.loadingItem = true;
-      })
-      .addCase(fetchItemById.fulfilled, (state, action) => {
-        state.loadingItem = false;
-        state.selectedItem = action.payload; 
-      })
+      builder
+        .addCase(fetchItemById.pending, (state) => {
+          state.loadingItem = true;
+        })
+        .addCase(fetchItemById.fulfilled, (state, action) => {
+          state.loadingItem = false;
+          state.selectedItem = action.payload; 
+        })
       .addCase(fetchItemById.rejected, (state, action) => {
         state.loadingItem = false;
         state.errorItem = action.error.message; 
