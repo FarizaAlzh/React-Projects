@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getAllItems , getItemById } from '../../services/ProductService';
+import { getAllItems, getItemById } from '../../services/ProductService';
 
-
+// Асинхронный запрос на получение всех товаров
 export const fetchItems = createAsyncThunk(
   'items/fetchItems',
   async (query) => {
@@ -10,7 +10,7 @@ export const fetchItems = createAsyncThunk(
   }
 );
 
-
+// Асинхронный запрос на получение одного товара по ID
 export const fetchItemById = createAsyncThunk(
   'items/fetchItemById',
   async (id) => {
@@ -29,6 +29,7 @@ const initialState = {
   query: "",
 };
 
+// Слайс с состоянием для товаров
 const itemsSlice = createSlice({
   name: 'items',
   initialState,
@@ -36,37 +37,40 @@ const itemsSlice = createSlice({
     setQuery: (state, action) => {
       state.query = action.payload;
     },
+    setItems: (state, action) => {
+      state.list = action.payload;
+    }
   },
-    extraReducers: (builder) => {
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchItems.pending, (state) => {
+        state.loadingList = true;
+      })
+      .addCase(fetchItems.fulfilled, (state, action) => {
+        state.loadingList = false;
+        state.list = action.payload;
+        // Кэшируем данные в localStorage
+        localStorage.setItem('items', JSON.stringify(action.payload));
+      })
+      .addCase(fetchItems.rejected, (state, action) => {
+        state.loadingList = false;
+        state.errorList = action.error.message;
+      });
 
-      builder
-        .addCase(fetchItems.pending, (state) => {
-          state.loadingList = true;
-        })
-        .addCase(fetchItems.fulfilled, (state, action) => {
-          state.loadingList = false;
-          state.list = action.payload
-                        
-        })
-        .addCase(fetchItems.rejected, (state, action) => {
-          state.loadingList = false;
-          state.errorList = action.error.message; 
-        });
-
-      builder
-        .addCase(fetchItemById.pending, (state) => {
-          state.loadingItem = true;
-        })
-        .addCase(fetchItemById.fulfilled, (state, action) => {
-          state.loadingItem = false;
-          state.selectedItem = action.payload; 
-        })
+    builder
+      .addCase(fetchItemById.pending, (state) => {
+        state.loadingItem = true;
+      })
+      .addCase(fetchItemById.fulfilled, (state, action) => {
+        state.loadingItem = false;
+        state.selectedItem = action.payload;
+      })
       .addCase(fetchItemById.rejected, (state, action) => {
         state.loadingItem = false;
-        state.errorItem = action.error.message; 
+        state.errorItem = action.error.message;
       });
   },
 });
 
-export const { setQuery } = itemsSlice.actions;
+export const { setQuery, setItems } = itemsSlice.actions;
 export default itemsSlice.reducer;

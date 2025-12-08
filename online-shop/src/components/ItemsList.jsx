@@ -22,7 +22,16 @@ const ItemsList = () => {
   }, [query]);
 
   useEffect(() => {
-    dispatch(fetchItems(debouncedQuery));  
+    // Проверка на интернет-соединение
+    if (navigator.onLine) {
+      dispatch(fetchItems(debouncedQuery));  // Запрос к API, если интернет есть
+    } else {
+      // Используем кэшированные данные, если нет интернета
+      const cachedItems = localStorage.getItem('items');
+      if (cachedItems) {
+        dispatch({ type: 'items/setItems', payload: JSON.parse(cachedItems) });
+      }
+    }
   }, [debouncedQuery, dispatch]);
 
   const handleInputChange = (e) => {
@@ -32,6 +41,7 @@ const ItemsList = () => {
 
   if (loadingList) return <Spinner />;
   if (errorList) return <ErrorBox message={errorList} />;  
+  
   return (
     <div>
       <h1>Products</h1>
@@ -49,7 +59,7 @@ const ItemsList = () => {
           <p>No products found</p>  
         ) : (
           products.map((product) => (
-            <ProductCard
+            <ProductCard  
               key={product.id}
               name={product.title}
               price={product.price}
