@@ -1,6 +1,9 @@
-export const fetchItems = async () => {
+export const fetchItems = async (search = '', limit = 10, page = 1) => {
   try {
-    const response = await fetch('https://dummyjson.com/products');
+    const skip = (page - 1) * limit;
+    const url = `https://dummyjson.com/products/search?q=${search}&limit=${limit}&skip=${skip}`;
+    
+    const response = await fetch(url);
     const data = await response.json();
     return data.products; 
   } catch (error) {
@@ -19,4 +22,3 @@ export const fetchItemDetails = async (id) => {
     return null;
   }
 };
-

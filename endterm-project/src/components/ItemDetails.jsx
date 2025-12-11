@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { fetchItemDetails } from '../services/apiService';
 
 const ItemDetails = () => {
-  const { id } = useParams(); 
+  const { id } = useParams(); // Получаем ID товара из маршрута
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
 
