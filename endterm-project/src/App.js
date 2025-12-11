@@ -8,6 +8,7 @@ import ItemsList from './components/ItemsList';
 import Login from './components/Login';
 import Profile from './components/Profile'; 
 import Signup from './components/Signup';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => {
   return (
@@ -20,13 +21,19 @@ const App = () => {
               <Route path="items/:id" element={<ItemsDetails />} />
               <Route path="login" element={<Login />} />
               <Route path="signup" element={<Signup />} />
-              <Route path="profile" element={<Profile />} />
+              <Route
+                  path="/profile"
+                  element={
+                    <ProtectedRoute>
+                      <Profile />
+                    </ProtectedRoute>
+                  }
+              />
               <Route path="favorites" element={<Favorites />} />
             </Route>
           </Routes>
         </BrowserRouter>
   );
 };
-
 export default App;
 

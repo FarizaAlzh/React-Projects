@@ -14,9 +14,17 @@ const Login = () => {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate('/profile'); // Перенаправление на страницу профиля после успешного входа
+      navigate('/profile'); 
     } catch (error) {
-      setError(error.message);
+      if (error.code === 'auth/user-not-found') {
+        setError('Пользователь с таким email не найден.');
+      } else if (error.code === 'auth/wrong-password') {
+        setError('Неправильный пароль.');
+      } else if (error.code === 'auth/invalid-email') {
+        setError('Неверный email.');
+      } else {
+        setError('Произошла ошибка. Попробуйте снова.');
+      }
     }
   };
 

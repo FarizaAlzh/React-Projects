@@ -10,7 +10,6 @@ const Signup = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Функция для валидации пароля
   const validatePassword = (password) => {
     const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
     return regex.test(password);
@@ -31,9 +30,17 @@ const Signup = () => {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate('/profile'); // Перенаправление на страницу профиля после успешной регистрации
+      navigate('/profile'); 
     } catch (error) {
-      setError(error.message);
+      if (error.code === 'auth/email-already-in-use') {
+        setError('Этот email уже зарегистрирован.');
+      } else if (error.code === 'auth/invalid-email') {
+        setError('Неверный email.');
+      } else if (error.code === 'auth/weak-password') {
+        setError('Пароль должен содержать минимум 6 символов.');
+      } else {
+        setError('Произошла ошибка. Попробуйте снова.');
+      }
     }
   };
 
