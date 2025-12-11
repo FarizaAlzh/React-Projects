@@ -29,6 +29,9 @@ const App = () => {
           }
         />
         <Route path="favorites" element={<Favorites />} />  
+        <div>
+          <OfflineBanner />
+        </div>
       </Routes>
     </Router>
   );
