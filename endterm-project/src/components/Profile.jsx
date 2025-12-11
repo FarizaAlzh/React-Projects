@@ -1,24 +1,19 @@
 import React from 'react';
-import { signOut } from 'firebase/auth';
-import { auth } from '../firebaseConfig';
-import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { Navigate } from 'react-router-dom';
 
 const Profile = () => {
-  const navigate = useNavigate();
+  const { currentUser } = useAuth();
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      navigate('/login'); 
-    } catch (error) {
-      console.error("Ошибка при выходе: ", error);
-    }
-  };
+  if (!currentUser) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <div>
-      <h1>Профиль</h1>
-      <button onClick={handleLogout}>Выйти</button>
+      <h2>Profile Page</h2>
+      <p>Welcome, {currentUser.email}!</p>
+      <button>Logout</button> 
     </div>
   );
 };
