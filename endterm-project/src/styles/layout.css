@@ -1,0 +1,10 @@
+.site-header{ background:linear-gradient(90deg,var(--brand-purple),#7f3bd6); color:white; padding:14px 22px; border-radius:10px }
+.site-header .nav{ display:flex; gap:18px; align-items:center }
+.sidebar{ width:260px }
+.main-area{ padding:20px }
+.profile-thumb{ width:48px; height:48px; border-radius:10px; object-fit:cover }
+
+.nav-links a{ color:rgba(255,255,255,0.95); text-decoration:none; margin-right:16px; font-weight:600 }
+.site-header .logo-mark{ box-shadow:0 8px 24px rgba(106,25,184,0.18) }
+
+.site-footer{ text-align:center; padding:18px; color:var(--muted) }

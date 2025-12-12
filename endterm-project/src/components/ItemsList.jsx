@@ -40,30 +40,41 @@ const ItemsList = () => {
   const isFavorite = (id) => favorites.some((fav) => fav.id === String(id));
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p className="app-container">Loading...</p>;
   }
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="Search items..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <div className="items-list">
-        {items.length >= 5 ? (
+    <div className="app-container items-list">
+      <div className="card">
+        <input
+          className="search"
+          type="text"
+          placeholder="Search items..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+
+      <div className="list" style={{ marginTop: 12 }}>
+        {items.length > 0 ? (
           items.map((item) => (
-            <div key={item.id}>
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-              <p>Price: ${item.price}</p>
-              <Link to={`/items/${item.id}`}>View Details</Link>
-              {isFavorite(item.id) ? (
-                <button onClick={() => removeFavorite(String(item.id))}>Remove from favorites</button>
-              ) : (
-                <button onClick={() => addFavorite(item)}>Add to favorites</button>
+                <div key={item.id} className="item-card card">
+              {((item.thumbnail) || (item.images && item.images[0])) && (
+                <img src={item.thumbnail || item.images[0]} alt={item.title} className="item-image" />
               )}
+              <h3>{item.title}</h3>
+              <p className="muted">{item.description}</p>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div className="price">${item.price}</div>
+                  <div>
+                  <Link to={`/items/${item.id}`} className="btn">View</Link>
+                  {isFavorite(item.id) ? (
+                    <button type="button" className="btn btn-fav remove" onClick={(e) => { e.stopPropagation(); console.log('remove click', item.id); removeFavorite(String(item.id)); }} style={{ marginLeft: 8 }}>Remove</button>
+                  ) : (
+                    <button type="button" className="btn btn-fav" onClick={(e) => { e.stopPropagation(); console.log('add click', item.id); addFavorite(item); }} style={{ marginLeft: 8 }}>Fav</button>
+                  )}
+                </div>
+              </div>
             </div>
           ))
         ) : (
@@ -71,10 +82,10 @@ const ItemsList = () => {
         )}
       </div>
 
-      <div className="pagination">
-        <button onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
-        <span>Page {page}</span>
-        <button onClick={() => setPage(page + 1)}>Next</button>
+      <div className="pagination card" style={{ marginTop: 12 }}>
+        <button className="btn" onClick={() => setPage(page - 1)} disabled={page === 1}>Previous</button>
+        <span style={{ margin: '0 12px' }}>Page {page}</span>
+        <button className="btn" onClick={() => setPage(page + 1)}>Next</button>
       </div>
     </div>
   );

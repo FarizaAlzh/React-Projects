@@ -32,21 +32,32 @@ const ItemDetails = () => {
   }
 
   return (
-    <div>
-      <h2>{item.name || item.title}</h2>
-      <img src={item.image || item.thumbnail} alt={item.name || item.title} />
-      <p>{item.description}</p>
-      <p>Price: ${item.price}</p>
-      <p>Category: {item.category}</p>
-      <p>Rating: {item.rating}</p>
-      <p>Stock: {item.stock}</p>
-      <p>Brand: {item.brand}</p>
-      <p>Discount: {item.discountPercentage}%</p>
-      {isFavorite ? (
-        <button onClick={() => removeFavorite(String(item.id))}>Remove from favorites</button>
-      ) : (
-        <button onClick={() => addFavorite(item)}>Add to favorites</button>
-      )}
+    <div className="app-container item-details card">
+      <div>
+        <img
+          src={
+            item.thumbnail || (Array.isArray(item.images) ? item.images[0] : item.images) || ''
+          }
+          alt={item.name || item.title}
+        />
+      </div>
+      <div className="info">
+        <h2>{item.name || item.title}</h2>
+        <p className="muted">{item.description}</p>
+        <p className="price">Price: ${item.price}</p>
+        <p>Category: {item.category}</p>
+        <p>Rating: {item.rating}</p>
+        <p>Stock: {item.stock}</p>
+        <p>Brand: {item.brand}</p>
+        <p>Discount: {item.discountPercentage}%</p>
+        <div style={{ marginTop: 12 }}>
+          {isFavorite ? (
+            <button type="button" className="btn secondary" onClick={(e) => { e.stopPropagation(); console.log('remove detail', item.id); removeFavorite(String(item.id)); }}>Remove from favorites</button>
+          ) : (
+            <button type="button" className="btn" onClick={(e) => { e.stopPropagation(); console.log('add detail', item.id); addFavorite(item); }}>Add to favorites</button>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

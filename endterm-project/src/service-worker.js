@@ -1,3 +1,7 @@
+import { precacheAndRoute } from 'workbox-precaching';
+
+precacheAndRoute(self.__WB_MANIFEST || []);
+
 const CACHE_NAME = 'v1_cache';
 const URLS_TO_CACHE = [
   '/',
@@ -46,6 +50,7 @@ self.addEventListener('activate', (event) => {
           if (!cacheWhitelist.includes(cacheName)) {
             return caches.delete(cacheName); 
           }
+          return null;
         })
       );
     })

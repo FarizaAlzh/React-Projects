@@ -1,0 +1,4 @@
+.profile-page{ max-width:680px; margin:28px auto }
+.profile-header{ display:flex; gap:12px; align-items:center }
+.profile-header img{ border-radius:8px }
+.upload-box{ margin-top:12px }

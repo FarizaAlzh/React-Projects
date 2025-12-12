@@ -1,0 +1,4 @@
+.auth-box{ max-width:420px; margin:28px auto; padding:18px; border-radius:8px }
+.auth-box label{ display:block; margin-bottom:6px; color:var(--muted) }
+.auth-box input{ width:100%; padding:8px; margin-bottom:10px; border-radius:6px; border:1px solid #e6e6e6 }
+.auth-actions{ display:flex; gap:8px; justify-content:flex-end }

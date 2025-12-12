@@ -1,5 +1,5 @@
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { db } from '../firebaseConfig';
+import { db as database } from '../firebaseConfig';
 
 const FAVORITES_KEY = 'favorites';
 const FAVORITES_COLLECTION = 'favorites';
@@ -36,13 +36,20 @@ export const getLocalFavorites = () => {
 
 const persistRemoteFavorites = async (userId, favorites) => {
   const normalizedFavorites = normalizeFavoritesArray(favorites);
-  await setDoc(
-    doc(db, FAVORITES_COLLECTION, userId),
-    { items: normalizedFavorites },
-    { merge: true }
-  );
-  saveLocalFavorites(normalizedFavorites);
-  return normalizedFavorites;
+  try {
+    await setDoc(
+      doc(database, FAVORITES_COLLECTION, userId),
+      { items: normalizedFavorites },
+      { merge: true }
+    );
+    saveLocalFavorites(normalizedFavorites);
+    return normalizedFavorites;
+  } catch (err) {
+    console.warn('Could not persist remote favorites (possibly offline):', err.message || err);
+    // Fallback: save locally and return normalized favorites so UI remains functional
+    saveLocalFavorites(normalizedFavorites);
+    return normalizedFavorites;
+  }
 };
 
 export const formatFavoriteItem = (item) => ({
@@ -70,12 +77,17 @@ export const removeLocalFavorite = (itemId) => {
 };
 
 export const getRemoteFavorites = async (userId) => {
-  const snapshot = await getDoc(doc(db, FAVORITES_COLLECTION, userId));
-  if (snapshot.exists()) {
-    const data = snapshot.data();
-    return Array.isArray(data.items) ? normalizeFavoritesArray(data.items) : [];
+  try {
+    const snapshot = await getDoc(doc(database, FAVORITES_COLLECTION, userId));
+    if (snapshot.exists()) {
+      const data = snapshot.data();
+      return Array.isArray(data.items) ? normalizeFavoritesArray(data.items) : [];
+    }
+    return [];
+  } catch (err) {
+    console.warn('Could not fetch remote favorites (possibly offline):', err.message || err);
+    return []; // fallback to empty so UI can use local favorites
   }
-  return [];
 };
 
 export const addRemoteFavorite = async (userId, item) => {

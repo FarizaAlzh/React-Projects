@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebaseConfig';
 import { useNavigate } from 'react-router-dom';
+import { registerUser } from '../services/authService';
+import '../styles/auth.css';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
@@ -29,14 +29,15 @@ const Signup = () => {
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      navigate('/login'); // Перенаправляем на страницу Login после регистрации
+      await registerUser(email, password);
+      navigate('/login');
     } catch (error) {
-      if (error.code === 'auth/email-already-in-use') {
+      const code = error.code || '';
+      if (code.includes('email-already-in-use')) {
         setError('Этот email уже зарегистрирован.');
-      } else if (error.code === 'auth/invalid-email') {
+      } else if (code.includes('invalid-email')) {
         setError('Неверный email.');
-      } else if (error.code === 'auth/weak-password') {
+      } else if (code.includes('weak-password')) {
         setError('Пароль должен содержать минимум 6 символов.');
       } else {
         setError('Произошла ошибка. Попробуйте снова.');
@@ -45,42 +46,46 @@ const Signup = () => {
   };
 
   return (
-    <div>
-      <h2>Регистрация</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Пароль</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Повторите пароль</label>
-          <input
-            type="password"
-            value={repeatPassword}
-            onChange={(e) => setRepeatPassword(e.target.value)}
-            required
-          />
-        </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>} {/* Ошибка при регистрации */}
-        <button type="submit">Зарегистрироваться</button>
-      </form>
-      <p>
-        Уже есть аккаунт? <a href="/login">Войти</a> {/* Ссылка на вход */}
-      </p>
+    <div className="app-container">
+      <div className="auth-box card">
+        <h2>Регистрация</h2>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label>Пароль</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label>Повторите пароль</label>
+            <input
+              type="password"
+              value={repeatPassword}
+              onChange={(e) => setRepeatPassword(e.target.value)}
+              required
+            />
+          </div>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+          <div className="auth-actions">
+            <button className="btn" type="submit">Зарегистрироваться</button>
+          </div>
+        </form>
+        <p style={{ marginTop: 12 }}>
+          Уже есть аккаунт? <a href="/login">Войти</a>
+        </p>
+      </div>
     </div>
   );
 };

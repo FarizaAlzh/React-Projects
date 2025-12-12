@@ -1,17 +1,15 @@
-import { registerUser, loginUser, logoutUser } from '../services/authService';
 
-const LoginPage = () => {
-  const handleLogin = async (email, password) => {
-    try {
-      await loginUser(email, password);
-    } catch (error) {
-      console.error('Login failed:', error.message);
-    }
-  };
+import { auth } from '../firebaseConfig';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut as fbSignOut } from 'firebase/auth';
 
-  return (
-    <div>
-      <button onClick={() => handleLogin('test@example.com', 'password123')}>Login</button>
-    </div>
-  );
+export const loginUser = (email, password) => {
+  return signInWithEmailAndPassword(auth, email, password);
+};
+
+export const registerUser = (email, password) => {
+  return createUserWithEmailAndPassword(auth, email, password);
+};
+
+export const logoutUser = () => {
+  return fbSignOut(auth);
 };

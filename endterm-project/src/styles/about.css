@@ -1,0 +1,4 @@
+.about-page{ max-width:900px; margin:0 auto }
+.about-hero{ display:flex; gap:16px; align-items:center }
+.about-hero h1{ color:var(--brand-purple); margin:0 }
+.about-hero p{ color:var(--muted) }
