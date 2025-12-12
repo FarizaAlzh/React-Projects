@@ -10,8 +10,8 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 ReactDOM.render(
   <Provider store={store}>
     <AuthProvider>
-        <App />
-    </AuthProvider>,  
+      <App />
+    </AuthProvider>
   </Provider>,
   document.getElementById('root')
 );
