@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,10 +11,11 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(''); // Сбрасываем ошибку перед новой попыткой входа
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate('/profile'); 
+      navigate('/profile'); // Перенаправляем на профиль после успешного входа
     } catch (error) {
       if (error.code === 'auth/user-not-found') {
         setError('Пользователь с таким email не найден.');
@@ -50,9 +51,12 @@ const Login = () => {
             required
           />
         </div>
-        {error && <p>{error}</p>}
+        {error && <p style={{ color: 'red' }}>{error}</p>} {/* Ошибка при неверных данных */}
         <button type="submit">Войти</button>
       </form>
+      <p>
+        Нет аккаунта? <a href="/signup">Зарегистрироваться</a> {/* Ссылка на регистрацию */}
+      </p>
     </div>
   );
 };

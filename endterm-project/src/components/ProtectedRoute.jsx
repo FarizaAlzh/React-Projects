@@ -1,11 +1,14 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { auth } from '../firebaseConfig';
+import { useAuth } from '../context/AuthContext';
 
 const ProtectedRoute = ({ children }) => {
-  if (!auth.currentUser) {
-    return <Navigate to="/login" />;
+  const { currentUser } = useAuth();  // Получаем текущего пользователя из контекста
+
+  if (!currentUser) {
+    return <Navigate to="/login" />;  // Перенаправляем на страницу входа, если нет текущего пользователя
   }
+
   return children;
 };
 

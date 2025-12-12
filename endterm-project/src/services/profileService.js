@@ -22,3 +22,8 @@ export const updateUserProfile = async (displayName, photoURL) => {
     throw new Error('User not logged in');
   }
 };
+
+export const getProfilePictureUrl = () => {
+  const user = auth.currentUser;  // Получаем текущего пользователя
+  return user ? user.photoURL : null;  // Если пользователь есть, возвращаем его фото, иначе null
+};

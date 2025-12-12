@@ -9,10 +9,12 @@ import Login from './components/Login';
 import Profile from './components/Profile'; 
 import Signup from './components/Signup';
 import ProtectedRoute from './components/ProtectedRoute';
+import OfflineBanner from './components/OfflineBanner';
 
 const App = () => {
   return (
     <Router>
+      <OfflineBanner />
       <Routes>
         <Route path="/" element={<Home />} />  
         <Route path="about" element={<AboutUs />} /> 
@@ -20,11 +22,18 @@ const App = () => {
         <Route path="items/:id" element={<ItemDetails />} /> 
         <Route path="login" element={<Login />} />  
         <Route path="signup" element={<Signup />} />  
+        <Route path="/" element={<Home />} />
+        <Route path="about" element={<AboutUs />} />
+        <Route path="items" element={<ItemsList />} />
+        <Route path="items/:id" element={<ItemDetails />} />
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
         <Route
           path="profile"
           element={
             <ProtectedRoute>
               <Profile />  
+              <Profile />
             </ProtectedRoute>
           }
         />
@@ -32,6 +41,7 @@ const App = () => {
         <div>
           <OfflineBanner />
         </div>
+        <Route path="favorites" element={<Favorites />} />
       </Routes>
     </Router>
   );

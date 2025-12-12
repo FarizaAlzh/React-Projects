@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,7 +30,7 @@ const Signup = () => {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate('/profile'); 
+      navigate('/login'); // Перенаправляем на страницу Login после регистрации
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
         setError('Этот email уже зарегистрирован.');
@@ -75,9 +75,12 @@ const Signup = () => {
             required
           />
         </div>
-        {error && <p>{error}</p>}
+        {error && <p style={{ color: 'red' }}>{error}</p>} {/* Ошибка при регистрации */}
         <button type="submit">Зарегистрироваться</button>
       </form>
+      <p>
+        Уже есть аккаунт? <a href="/login">Войти</a> {/* Ссылка на вход */}
+      </p>
     </div>
   );
 };

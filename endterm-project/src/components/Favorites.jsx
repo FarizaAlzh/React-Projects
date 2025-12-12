@@ -1,44 +1,21 @@
-import React from 'react';
-
-const useFavorites = () => {
-  const FAVORITES_KEY = 'favorites';
-  const [favorites, setFavorites] = React.useState(() => {
-    const storedFavorites = localStorage.getItem(FAVORITES_KEY);
-    return storedFavorites ? JSON.parse(storedFavorites) : [];
-  });
-
-  const addFavorite = (item) => {
-    setFavorites((prevFavorites) => {
-      const updatedFavorites = [...prevFavorites, item];
-      localStorage.setItem(FAVORITES_KEY, JSON.stringify(updatedFavorites));
-      return updatedFavorites;
-    });
-  };
-
-  const removeFavorite = (itemId) => {
-    setFavorites((prevFavorites) => {
-      const updatedFavorites = prevFavorites.filter((item) => item.id !== itemId);
-      localStorage.setItem(FAVORITES_KEY, JSON.stringify(updatedFavorites));
-      return updatedFavorites;
-    });
-  };
-
-  return { favorites, addFavorite, removeFavorite };
-};
+import useFavorites from '../hooks/useFavorites';
+const { favorites, removeFavorite, mergeMessage } = useFavorites();
 
 const Favorites = () => {
-  const { favorites, removeFavorite } = useFavorites();
+  const { favorites, removeFavorite, mergeMessage } = useFavorites();
 
   return (
     <div>
       <h2>Your Favorites</h2>
+      {mergeMessage && <p>{mergeMessage}</p>}
       {favorites.length === 0 ? (
         <p>No items in favorites</p>
       ) : (
         favorites.map((item) => (
           <div key={item.id}>
-            <h3>{item.name}</h3>
-            <button onClick={() => removeFavorite(item.id)}>Remove from Favorites</button>
+            <h3>{item.title}</h3>
+            {item.image && <img src={item.image} alt={item.title} width="120" />}
+            <button onClick={() => removeFavorite(String(item.id))}>Remove from Favorites</button>
           </div>
         ))
       )}
